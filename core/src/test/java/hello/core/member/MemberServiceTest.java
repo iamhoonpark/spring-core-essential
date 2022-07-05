@@ -7,6 +7,8 @@ public class MemberServiceTest {
 
     MemberService memberService = new MemberServiceImpl();
 
+    // 이 단위 테스트는 순수 스프링 컨테이너 없이 JAVA 코드로 테스트, 검증되는 것
+
     @Test
     void join() {
         // given(~ 이런 환경이 주어졌을 때,)
