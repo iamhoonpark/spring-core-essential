@@ -2,6 +2,7 @@ package hello.core.order;
 
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
@@ -12,8 +13,15 @@ public class OrderServiceImpl implements OrderService {
 
     // MemberRepository에서 회원을 찾아야 하기 때문에 필요
     private final MemberRepository memberRepository = new MemoryMemberRepository();
-    // 고정 할인 정책
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    /* 1) OrderServiceImpl이 DiscountPolicy 인터페이스와 FixDiscountPolicy 인 구현체 클래스도 함꼐 의존하고 있다 = DIP위반
+    *  2) 고정할인(Fix) 정책에서 유동적 할인(Rate) 정책으로 변경
+    *     private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    *     그러나 발생하는 문제점은 RateDiscountPolicy로 바꾸는 순간 OrderServiceImpl 에 코드를 수정해야함 이것이 의존성 = OCP위반
+    *     private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+    *  3) 인터페이스에만 의존하도록 의존관계를 변경
+    *     - OrderServiceImpl을 DiscountPolicy에만 의존하도록코드를 변경
+    *     - final 키워드는 제거 : 값이 무조건 할당되야만 해당 키워드를 선언 가능 */
+    private DiscountPolicy discountPolicy;
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
