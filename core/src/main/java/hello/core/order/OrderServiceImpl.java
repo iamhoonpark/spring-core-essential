@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
     * 3) 구현체가 아닌 인터페이스에만 의존하도록 의존관계를 변경
     *    - OrderServiceImpl 을 DiscountPolicy 에만 의존하도록 코드를 변경
     *    - final 키워드는 제거 : 값이 무조건 할당되야만 해당 키워드를 선언 가능
-    * */
+    */
     private DiscountPolicy discountPolicy;
 
     @Override
