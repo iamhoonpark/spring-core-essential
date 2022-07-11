@@ -12,7 +12,7 @@ public class OrderServiceImpl implements OrderService {
     // 주문 생성 요청이 들어오면, 회원정보를 요청 > 할인정책 > 최종 할인된 가격을 받아서 > 최종 생성된 주문을 반환
 
     // MeberRepository 에서 회원을 찾아야 하기 때문에 선언
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository; // = new MemoryMemberRepository();
 
     /*
     * 1) OrderServiceImpl 에서 DiscountPolicy 인터페이스와 FixDiscountPolicy 인 구현체 클래스도 함께 의존하고 있다 = DIP 위반
@@ -24,8 +24,14 @@ public class OrderServiceImpl implements OrderService {
     * 3) 구현체가 아닌 인터페이스에만 의존하도록 의존관계를 변경
     *    - OrderServiceImpl 을 DiscountPolicy 에만 의존하도록 코드를 변경
     *    - final 키워드는 제거 : 값이 무조건 할당되야만 해당 키워드를 선언 가능
+    *    - final 키워드는 무조건 기본으로 값이 할당되거나, 생성자를 통해 값이 할당 되어야 함
     */
-    private DiscountPolicy discountPolicy;
+    private DiscountPolicy discountPolicy; // = new FixDiscountPolicy();
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {

@@ -9,7 +9,11 @@ public class MemberApp {
 
     // 회원 도메인 실행과 테스트
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
+        AppConfig appConfig = new AppConfig();
+        // MemberService memberService = new MemberServiceImpl();
+        // AppConfig 에서 memberService 를 달라고하면, memberImpl 객체를 생성하면서 MemoryRepo 를 주입해줌
+        MemberService memberService = appConfig.memberService();
+
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 
