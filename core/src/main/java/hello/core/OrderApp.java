@@ -26,7 +26,7 @@ public class OrderApp {
         // 현재 DB가 없으니 메모리 객체에 저장
         memberService.join(member);
         // 주문
-        Order order = orderService.createOrder(memberId, "Phone Case", 10000);
+        Order order = orderService.createOrder(memberId, "Phone Case", 20000);
         // 호출
         System.out.println("order = " + order);
         System.out.println("order.calculatePrice = " + order.calculatePrice());

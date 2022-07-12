@@ -12,13 +12,13 @@ package hello.core;
 
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.FixDiscountPolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
 
-//
 public class AppConfig {
 
     /*
@@ -50,11 +50,12 @@ public class AppConfig {
 
     // AppConfig Refactoring
     private DiscountPolicy discountPolicy() {
-        return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 }
 /*
     AppConfig 정리
+    - AppConfig 의 등장으로 애플리케이션이 크게 ①사용영역 ②객체를 생성하고 구성(Configuration)하는 영역으로 분리
     - AppConfig 를 통해서 관심사를 확실하게 분리했다.
     - AppConfig 는 공연 기획자 즉, AppConfig 는 구체 클래스를 선택하고, 배역에 맞는 담당 배우를 캐스팅한다.
       즉, 애플리케이션이 어떻게 동작해야 할지 전체 구성을 책임진다.
