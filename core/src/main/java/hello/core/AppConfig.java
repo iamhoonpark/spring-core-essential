@@ -18,7 +18,10 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRepository;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration // Spring 애플리케이션이 어떻게 구성되는지 설정하는 것(= 설정 정보, 구성 정보)
 public class AppConfig {
 
     /*
@@ -34,22 +37,26 @@ public class AppConfig {
         - 생성자 주입
          · 생성자를 통해서 객체가 (new instance)해서 생성된게 들어감
     */
+    @Bean // Spring Bean 을 선언할 경우 스프링컨테이너에 등록이 됨
     public MemberService memberService() {
         return new MemberServiceImpl(memoryMemberRepository());
     }
 
     // AppConfig Refactoring : interface 를 반환해주는 역할 Ctrl + Alt + M
-    private MemoryMemberRepository memoryMemberRepository() {
+    @Bean
+    public MemoryMemberRepository memoryMemberRepository() {
         return new MemoryMemberRepository();
     }
 
+    @Bean
     public OrderService orderService() {
         // OrderService 는 사용하는 field 가 2개
         return new OrderServiceImpl(memoryMemberRepository(), discountPolicy());
     }
 
     // AppConfig Refactoring
-    private DiscountPolicy discountPolicy() {
+    @Bean
+    public DiscountPolicy discountPolicy() {
         return new RateDiscountPolicy();
     }
 }
